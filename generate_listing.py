@@ -51,8 +51,11 @@ def build_listing(commands, cmd_defs, excluded, overrides=None):
         lines.append(f"=== {cat} ===")
         for name, d in sorted(by_cat[cat]):
             short = short_description(d.get("description", "")) or "-"
+            # Override manuel pour short (description affichée)
+            if name in overrides and "short" in overrides.get(name, {}):
+                short = overrides[name]["short"]
             hint = d.get("args_hint", "") or "-"
-            # Override manuel si présent
+            # Override manuel pour args_hint
             if name in overrides and "args_hint" in overrides.get(name, {}):
                 hint = overrides[name]["args_hint"]
             lines.append(f"/{name:<20} {short:<64} {hint}")

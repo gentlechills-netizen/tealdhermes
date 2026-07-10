@@ -5,3 +5,6 @@
 
 goal:
   args_hint: "[text | draft <text> | show | clear | status ]"
+
+fast:
+  short: "Toggle fast mode"
