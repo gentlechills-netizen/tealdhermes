@@ -1,5 +1,15 @@
 # Changelog
 
+## V4 — 2026-07-10
+
+### Added
+- `overrides.yaml` — manual overrides for COMMAND_REGISTRY fields
+- `load_overrides()` in `sources.py` — override loader
+- `/goal` args_hint shortened via override (171→133 chars)
+
+### Changed
+- `generate_listing.py` — applies overrides from `overrides.yaml` to listing hints
+
 ## V3 — 2026-07-09
 
 ### Added

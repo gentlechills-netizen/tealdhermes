@@ -42,6 +42,7 @@ générateurs (Python)
 ├── tldrh                            ← Wrapper bash
 ├── config.toml                      ← Patron config tealdeer
 ├── exclusions.yaml                  ← 25 commandes exclues
+├── overrides.yaml                   ← 1 override manuel
 ├── examples.yaml                    ← 46 commandes avec exemples
 ├── notes.yaml                       ← 10 commandes avec notes Dashboard
 ├── .gitignore
@@ -77,17 +78,29 @@ cd ~/.hermes/tldr-hermes && ./update.sh
 
 Le script :
 1. Vérifie que tous les fichiers source existent
-2. Exécute `generate_listing.py` et `generate_pages.py`
-3. Copie les pages dans le répertoire runtime
+2. Exécute `generate_listing.py` → `pages/_listing.md` (listing 3 colonnes par catégorie)
+3. Exécute `generate_pages.py` → `pages/*.page.md` (pages individuelles), nettoie les orphelines
 4. Compare `examples.yaml` avec les commandes actuelles et produit un rapport de diff
 
+Note : `generate_listing.py` applique les overrides de `overrides.yaml` (ex: args_hint personnalisé pour `/goal`).
+
 Le rapport de diff signale :
-- Nouvelles commandes sans exemples → à ajouter dans `examples.yaml`
-- Entrées orphelines dans `examples.yaml` → commandes supprimées, à nettoyer
+- Nouvelles commandes sans exemples → le mainteneur ajoute manuellement dans `examples.yaml`
+- Entrées orphelines dans `examples.yaml` → le mainteneur nettoie
+
+**Règle fondamentale :** les exemples sont créés et révisés manuellement par le mainteneur, sans automatisation ni IA. Le rapport diff est un outil d'information pour l'humain — aucun agent Hermes ne modifie `examples.yaml` suite à un diff.
 
 Si aucune différence, aucun rapport n'est produit.
 
+## Piège — alias bash périmé après modification
+
+Après toute modification du wrapper (`tldrh`) ou de l'alias dans `.bash_aliases`, le développeur DOIT exécuter `source ~/.bashrc` (ou ouvrir un nouveau terminal). Les alias bash sont chargés en mémoire au démarrage de la session — changer le fichier ne met pas à jour la session courante.
+
+Un agent Hermes qui omet cette étape force le développeur à déboguer un problème qui n'existe pas : le fichier est bon, le wrapper est bon, mais le shell exécute encore l'ancien alias pointant vers une version périmée ou un projet mort.
+
+**Vérification :** `type tldrh` dans le terminal du développeur — si le chemin affiché n'est pas celui attendu, la session n'est pas à jour.
+
 ## Sources de données
 
-Voir `data_architecture.md` pour la description complète des 6 sources canoniques :
-docs page, COMMAND_REGISTRY, config.yaml, exclusions.yaml, notes.yaml, examples.yaml.
+Voir `data_architecture.md` pour la description complète des 7 sources canoniques :
+docs page, COMMAND_REGISTRY, config.yaml, exclusions.yaml, overrides.yaml, notes.yaml, examples.yaml.

@@ -22,6 +22,7 @@ DOCS_URL = "https://hermes-agent.nousresearch.com/docs/reference/slash-commands"
 EXCLUSIONS_YAML = os.path.join(TLDRH_DIR, "exclusions.yaml")
 NOTES_YAML = os.path.join(TLDRH_DIR, "notes.yaml")
 EXAMPLES_YAML = os.path.join(TLDRH_DIR, "examples.yaml")
+OVERRIDES_YAML = os.path.join(TLDRH_DIR, "overrides.yaml")
 
 # Catégories CLI (hors messaging) — ordre d'affichage du listing
 CLI_CATEGORIES = {
@@ -197,6 +198,23 @@ def load_exclusions():
     with open(EXCLUSIONS_YAML) as f:
         data = yaml.safe_load(f) or {}
     return {name for name, info in data.items() if info.get("ignore")}
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# OVERRIDES (remplacements manuels pour champs COMMAND_REGISTRY)
+# ═══════════════════════════════════════════════════════════════════════
+
+def load_overrides():
+    """Charger les overrides manuels.
+
+    Retourne : dict of name -> dict of field -> value
+    Utile pour remplacer args_hint trop long sans modifier commands.py.
+    """
+    if not os.path.exists(OVERRIDES_YAML):
+        return {}
+    with open(OVERRIDES_YAML) as f:
+        data = yaml.safe_load(f) or {}
+    return data
 
 
 # ═══════════════════════════════════════════════════════════════════════
