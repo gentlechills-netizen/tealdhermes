@@ -1,0 +1,50 @@
+# notes.yaml — Notes manuelles pour les pages /<command> de tldrh
+# Chaque entrée : nom de la commande → liste de notes textuelles.
+# Le générateur colle ces notes verbatim dans la section Notes:.
+
+model:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select MODELS menu.
+  - Also configurable in: CRON, PROFILES, KEYS menus.
+  - /model can only switch between already-configured providers.
+    Use /config to view current configuration and /reasoning to adjust reasoning effort.
+
+cron:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select CRON menu.
+
+skills:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select SKILLS menu.
+  - Also configurable in: CRON menu.
+
+tools:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select SKILLS menu.
+
+toolsets:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select SKILLS menu.
+
+plugins:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select PLUGINS menu.
+
+profile:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select PROFILES menu.
+  - Also configurable in: KANBAN menu.
+
+kanban:
+  - Command status and configuration in Hermes Web Dashboard.
+    Type `hermes dashboard` in the CLI terminal and select KANBAN menu.
+
+goal:
+  - "See the /goal user guide: https://hermes-agent.nousresearch.com/docs/user-guide/features/goals"
+  - Very important Hermes command: improves results for non-simple tasks.
+
+snapshot:
+  - Advised to perform regularly or before tinkering with Hermes configuration.
+
+reasoning:
+  - Related commands: /model — Show or change the current LLM model. /config — View current configuration details.

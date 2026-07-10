@@ -1,0 +1,58 @@
+# exclusions.yaml — Commandes à ignorer dans tldrh
+# Ces commandes sont exclues manuellement : trop avancées, enfantines,
+# ou non pertinentes pour le public cible.
+#
+# Le générateur scrape TOUTES les commandes de la page docs,
+# puis retire celles listées ici. Commandes messaging-only
+# (gateway_only=True) sont filtrées automatiquement par le générateur.
+
+pet:
+  ignore: true
+hatch:
+  ignore: true
+codex-runtime:
+  ignore: true
+blueprint:
+  ignore: true
+curator:
+  ignore: true
+debug:
+  ignore: true
+handoff:
+  ignore: true
+reload-mcp:
+  ignore: true
+browser:
+  ignore: true
+background:
+  ignore: true
+branch:
+  ignore: true
+bundles:
+  ignore: true
+history:
+  ignore: true
+indicator:
+  ignore: true
+memory:
+  ignore: true
+platforms:
+  ignore: true
+reload-skills:
+  ignore: true
+resume:
+  ignore: true
+skin:
+  ignore: true
+steer:
+  ignore: true
+subgoal:
+  ignore: true
+suggestions:
+  ignore: true
+voice:
+  ignore: true
+yolo:
+  ignore: true
+footer:
+  ignore: true

@@ -1,0 +1,222 @@
+agents:
+- cmd: /agents
+  desc: ''
+billing:
+- cmd: /billing
+  desc: ''
+busy:
+- cmd: /busy queue
+  desc: 'Queue a prompt for the next turn instead of interrupting:'
+- cmd: /busy interrupt
+  desc: 'Interrupt the running agent and send the new prompt immediately:'
+- cmd: /busy status
+  desc: 'Show the current busy mode:'
+clear:
+- cmd: /clear
+  desc: ''
+compress:
+- cmd: /compress
+  desc: 'Compress the entire conversation:'
+- cmd: /compress here 5
+  desc: 'Keep the last 5 exchanges verbatim:'
+- cmd: /compress focus <topic>
+  desc: 'Focus the summary on a specific <topic>:'
+- cmd: /compress --preview
+  desc: 'Preview what compression would discard:'
+config:
+- cmd: /config
+  desc: ''
+copy:
+- cmd: /copy
+  desc: 'Copy the most recent response:'
+- cmd: /copy 3
+  desc: 'Copy a specific response by index:'
+credits:
+- cmd: /credits
+  desc: ''
+cron:
+- cmd: /cron list
+  desc: 'List all scheduled tasks:'
+- cmd: /cron create
+  desc: 'Create a new recurring task:'
+- cmd: /cron pause compress-daily
+  desc: 'Pause a task without deleting it:'
+- cmd: /cron remove compress-daily
+  desc: 'Remove a task:'
+fast:
+- cmd: /fast fast
+  desc: 'Enable fast mode (priority processing):'
+- cmd: /fast normal
+  desc: 'Disable fast mode (normal priority):'
+- cmd: /fast status
+  desc: 'Check current fast mode status:'
+goal:
+- cmd: /goal refactor the login module
+  desc: 'Set a new goal:'
+- cmd: /goal draft
+  desc: 'Draft a goal using the editor:'
+- cmd: /goal status
+  desc: 'Check whether the current goal is complete:'
+- cmd: /goal pause
+  desc: 'Pause the goal loop without clearing it:'
+help:
+- cmd: /help
+  desc: ''
+image:
+- cmd: /image ~/Pictures/screenshot.png
+  desc: 'Attach a local image for the next prompt:'
+- cmd: /image photo.jpg
+  desc: 'Attach a JPEG from the current directory:'
+insights:
+- cmd: /insights 7
+  desc: 'Display insights for the last 7 days:'
+kanban:
+- cmd: /kanban
+  desc: 'Show the current board:'
+- cmd: /kanban add "Fix login bug"
+  desc: 'Add a task to the board:'
+- cmd: /kanban done fix-login-bug
+  desc: 'Mark a task as complete:'
+- cmd: '/kanban comment fix-login-bug "Fixed in PR #42"'
+  desc: 'Comment on a task:'
+learn:
+- cmd: /learn ~/my-python-project/
+  desc: 'Learn from a project directory:'
+- cmd: /learn "the debugging workflow we just used"
+  desc: 'Learn from the current conversation workflow:'
+moa:
+- cmd: /moa "Explain quantum entanglement to a 10-year-old"
+  desc: 'Run a prompt through Mixture of Agents:'
+- cmd: /moa "How would you optimize this SQL query?"
+  desc: 'Get multiple perspectives on a coding problem:'
+model:
+- cmd: /model claude-sonnet-4
+  desc: 'Switch to a specific model:'
+- cmd: /model openai/gpt-4o
+  desc: 'Switch provider and model:'
+- cmd: /model claude-sonnet-4 --global
+  desc: 'Persist the change to config.yaml:'
+- cmd: /model --refresh
+  desc: 'Refresh the available model list:'
+new:
+- cmd: /new
+  desc: 'Start a fresh session:'
+- cmd: /new my-experiment
+  desc: 'Start a named session for easy recall:'
+paste:
+- cmd: /paste
+  desc: ''
+personality:
+- cmd: /personality
+  desc: 'List available personalities:'
+- cmd: /personality claude
+  desc: 'Switch to a specific personality:'
+plugins:
+- cmd: /plugins
+  desc: ''
+profile:
+- cmd: /profile
+  desc: ''
+prompt:
+- cmd: /prompt
+  desc: 'Open the editor with an empty buffer:'
+- cmd: /prompt summarize the key points from
+  desc: 'Pre-fill the editor with starting text:'
+queue:
+- cmd: /queue "Also, check if the tests pass"
+  desc: 'Queue a follow-up question for the next turn:'
+- cmd: /q "Summarize the results"
+  desc: 'useful alias for faster feedback:'
+quit:
+- cmd: /quit
+  desc: 'Exit the current session:'
+- cmd: /quit --delete
+  desc: 'Exit and delete the session history:'
+reasoning:
+- cmd: /reasoning show
+  desc: 'Show reasoning tokens inline with responses:'
+- cmd: /reasoning hide
+  desc: 'Hide reasoning tokens from responses:'
+- cmd: /reasoning high
+  desc: 'Set reasoning effort (low, medium, high, extra-high):'
+- cmd: /reasoning clamp 2000
+  desc: 'Clamp reasoning to a maximum token budget:'
+redraw:
+- cmd: /redraw
+  desc: ''
+reload:
+- cmd: /reload
+  desc: ''
+retry:
+- cmd: /retry
+  desc: ''
+rollback:
+- cmd: /rollback
+  desc: 'List available checkpoints:'
+- cmd: /rollback 3
+  desc: 'Restore checkpoint number 3:'
+save:
+- cmd: /save
+  desc: ''
+sessions:
+- cmd: /sessions
+  desc: ''
+skills:
+- cmd: /skills
+  desc: ''
+snapshot:
+- cmd: /snapshot
+  desc: 'List all snapshots:'
+- cmd: /snapshot create <label>
+  desc: 'Create a new snapshot with a <label>:'
+- cmd: /snapshot restore <label>
+  desc: 'Restore a specific snapshot:'
+- cmd: /snapshot prune 5
+  desc: 'Remove old snapshots:'
+status:
+- cmd: /status
+  desc: ''
+statusbar:
+- cmd: /statusbar
+  desc: ''
+stop:
+- cmd: /stop
+  desc: ''
+timestamps:
+- cmd: /timestamps on
+  desc: 'Show timestamps on all messages:'
+- cmd: /timestamps off
+  desc: 'Hide timestamps:'
+- cmd: /timestamps status
+  desc: 'Show timestamps status:'
+title:
+- cmd: /title
+  desc: 'Show the current session title:'
+- cmd: /title debugging auth flow
+  desc: 'Set a descriptive title:'
+tools:
+- cmd: /tools list
+  desc: 'List all available tools:'
+- cmd: /tools enable web_search
+  desc: 'Enable a specific tool:'
+- cmd: /tools disable browser
+  desc: 'Disable a tool:'
+- cmd: /tools enable web_search terminal
+  desc: 'Enable multiple tools at once:'
+toolsets:
+- cmd: /toolsets
+  desc: ''
+undo:
+- cmd: /undo
+  desc: 'Undo the most recent turn:'
+- cmd: /undo 3
+  desc: 'Undo the last 3 turns:'
+usage:
+- cmd: /usage
+  desc: ''
+verbose:
+- cmd: /verbose
+  desc: ''
+version:
+- cmd: /version
+  desc: ''
