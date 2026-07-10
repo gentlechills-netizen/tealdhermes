@@ -22,6 +22,7 @@ from sources import (
     fetch_docs_page,
     parse_command_defs,
     load_exclusions,
+    load_overrides,
     short_description,
     CATEGORY_ORDER,
 )
@@ -30,8 +31,10 @@ TLDRH_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.path.join(TLDRH_DIR, "pages", "_listing.md")
 
 
-def build_listing(commands, cmd_defs, excluded):
+def build_listing(commands, cmd_defs, excluded, overrides=None):
     """Assembler le listing 3 colonnes par catégorie."""
+    if overrides is None:
+        overrides = {}
     by_cat = {}
     for name, _, cat in commands:
         if name in excluded:
@@ -49,6 +52,9 @@ def build_listing(commands, cmd_defs, excluded):
         for name, d in sorted(by_cat[cat]):
             short = short_description(d.get("description", "")) or "-"
             hint = d.get("args_hint", "") or "-"
+            # Override manuel si présent
+            if name in overrides and "args_hint" in overrides.get(name, {}):
+                hint = overrides[name]["args_hint"]
             lines.append(f"/{name:<20} {short:<64} {hint}")
         lines.append("")
 
@@ -68,7 +74,11 @@ def main():
     excluded = load_exclusions()
     print(f"   → {len(excluded)} exclusions manuelles\n")
 
-    listing = build_listing(docs_cmds, cmd_defs, excluded)
+    print("🔄 Loading overrides...")
+    overrides = load_overrides()
+    print(f"   → {len(overrides)} commandes avec overrides\n")
+
+    listing = build_listing(docs_cmds, cmd_defs, excluded, overrides)
 
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
     with open(OUTPUT, "w") as f:

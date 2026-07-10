@@ -1,0 +1,7 @@
+# overrides.yaml — Remplacements manuels pour le listing tldrh
+# Chaque entrée : nom_commande → { champ: valeur_remplacée }
+# Les champs remplacent la valeur de COMMAND_REGISTRY.
+# Utile pour raccourcir des args_hint trop longs sans modifier le code source.
+
+goal:
+  args_hint: "[text | draft <text> | show | clear | status ]"

@@ -17,6 +17,7 @@
 | Source | Contenu | Entrées |
 |--------|---------|---------|
 | `exclusions.yaml` | Commandes à exclure de tldrh | 25 |
+| `overrides.yaml` | Remplacements manuels pour args_hint (et autres champs) | 1 |
 | `notes.yaml` | Notes Dashboard + annotations | 10 |
 | `examples.yaml` | Exemples au format OG tldr | 46 |
 
@@ -96,6 +97,19 @@ Voir `tldrh_pages_style_guide.md` pour les règles détaillées.
 
 Les commandes `gateway_only=True` sont filtrées automatiquement par le générateur
 et ne sont pas listées dans `exclusions.yaml`.
+
+## Overrides (`overrides.yaml`)
+
+Remplacements manuels pour certains champs de `COMMAND_REGISTRY`.
+Utile pour raccourcir un `args_hint` trop long sans modifier `commands.py`.
+
+Structure :
+```yaml
+command_name:
+  args_hint: "[valeur personnalisée]"
+```
+
+Actuellement : 1 override — `goal` (args_hint raccourci de 171 à 133 chars).
 
 ## Notes (`notes.yaml`)
 

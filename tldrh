@@ -10,7 +10,7 @@
 
 TLDRH_DIR="${TLDRH_DIR:-$HOME/.local/share/tldrh}"
 CONFIG_DIR="$HOME/.config/tldrh"
-LISTING="$HOME/.local/share/tldrh/pages/_listing.md"
+LISTING="$HOME/.hermes/tldr-hermes/pages/_listing.md"
 
 show_usage() {
     sed -n '/^# Usage:/,/^$/{s/^# //p}' "$0"
@@ -18,27 +18,7 @@ show_usage() {
 
 show_listing() {
     if [ -f "$LISTING" ]; then
-        # Re-format via awk pour alignement garanti
-        awk '{
-            if ($0 ~ /^===/) { print; next }
-            if ($0 ~ /^\//) {
-                cmd = $1
-                hint = $NF
-                # Reconstruire description (entre cmd et hint)
-                line = $0
-                gsub(/^[[:space:]]*/, "", line)
-                gsub(/[[:space:]]+$/, "", line)
-                # Enlever cmd du début
-                desc = substr(line, length(cmd) + 1)
-                gsub(/^[[:space:]]+/, "", desc)
-                # Enlever hint de la fin
-                desc = substr(desc, 1, length(desc) - length(hint))
-                gsub(/[[:space:]]+$/, "", desc)
-                printf "%-20s %-64s %s\n", cmd, desc, hint
-                next
-            }
-            print
-        }' "$LISTING"
+        cat "$LISTING"
     else
         echo "Aucun listing trouvé. Exécute d'abord generate_listing.py"
         echo "ou configure TLDRH_DIR."
