@@ -54,5 +54,7 @@ voice:
   ignore: true
 yolo:
   ignore: true
+whoami:
+  ignore: true
 footer:
   ignore: true
