@@ -159,5 +159,4 @@ command-name:
 
 - `install.sh` : copie wrapper + pages + config
 - README.md : documentation utilisateur
-- CHANGELOG.md : historique des versions
 - MIT License

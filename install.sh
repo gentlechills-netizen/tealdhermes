@@ -28,7 +28,7 @@ chmod +x "$TLDRH_BIN"
 # 3. Installer les pages
 if [ -d "$SCRIPT_DIR/pages" ]; then
     cp "$SCRIPT_DIR/pages/"*.page.md "$TLDRH_PAGES/" 2>/dev/null || true
-    cp "$SCRIPT_DIR/pages/_listing.md "$TLDRH_PAGES/" 2>/dev/null || true
+    cp "$SCRIPT_DIR/pages/_listing.md" "$TLDRH_PAGES/" 2>/dev/null || true
 fi
 
 # 4. Config tealdeer
@@ -39,7 +39,7 @@ custom_pages_dir = "${HOME}/.local/share/tldrh/pages"
 [updates]
 auto_update = false
 [display]
-compact = true
+compact = false
 use_pager = false
 EOF
 fi

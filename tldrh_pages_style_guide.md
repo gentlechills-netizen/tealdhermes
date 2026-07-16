@@ -31,7 +31,7 @@ with additional Hermes-specific metadata sections.
 One line. Matches the command name.
 
 ### Description — `> text`
-First sentence from [Hermes docs](https://hermes-agent.nousresearch.com/docs/reference/slash-commands).
+First sentence from `descriptions_longues.yaml` (fallback: COMMAND_REGISTRY description).
 Nothing less, nothing more. No editing.
 
 ### Syntax, Aliases, Available — `> Label: value`

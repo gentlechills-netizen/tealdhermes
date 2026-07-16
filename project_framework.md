@@ -52,7 +52,6 @@ générateurs (Python)
 ├── data_architecture.md             ← Sources de données canoniques
 ├── tldrh_pages_style_guide.md       ← Règles de format des pages
 ├── LICENSE                          ← MIT
-├── CHANGELOG.md                     ← Historique des versions
 └── reports/                         ← Rapports de diff (générés)
 
 ~/.local/bin/tldrh                   ← Wrapper installé (PATH)
