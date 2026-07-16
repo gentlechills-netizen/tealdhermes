@@ -27,7 +27,7 @@ wrapper ~/.local/bin/tldrh (bash)
 générateurs (Python)
    ├─ generate_listing.py  → _listing.md
    └─ generate_pages.py    → *.page.md
-        └─ sources.py      ← module partagé
+        └─ sources.py      ← module partagé (sans dépendances réseau)
 ```
 
 ## Fichiers et répertoires
@@ -36,15 +36,16 @@ générateurs (Python)
 ~/.hermes/tldr-hermes/               ← Projet (sources)
 ├── generate_listing.py              ← Volet 1 : listing 3 colonnes
 ├── generate_pages.py                ← Volet 2 : pages .page.md
-├── sources.py                       ← Module partagé (scraping, parsing)
+├── sources.py                       ← Module partagé (parsing COMMAND_REGISTRY + YAML)
 ├── update.sh                        ← Regénère tout + rapport diff
 ├── install.sh                       ← Installation one-liner
 ├── tldrh                            ← Wrapper bash
 ├── config.toml                      ← Patron config tealdeer
+├── descriptions_longues.yaml        ← 72 descriptions longues figées
 ├── exclusions.yaml                  ← 25 commandes exclues
-├── overrides.yaml                   ← 1 override manuel
-├── examples.yaml                    ← 46 commandes avec exemples
-├── notes.yaml                       ← 10 commandes avec notes Dashboard
+├── overrides.yaml                   ← 2 overrides manuels
+├── examples.yaml                    ← 49 commandes avec exemples
+├── notes.yaml                       ← 11 commandes avec notes Dashboard
 ├── .gitignore
 ├── README.md                        ← Documentation utilisateur
 ├── project_framework.md             ← Ce fichier
@@ -64,8 +65,8 @@ générateurs (Python)
 | Script | Rôle |
 |--------|------|
 | `update.sh` | Vérifie les sources, génère listing + pages, copie runtime, produit rapport diff |
-| `generate_listing.py` | Scrape docs + COMMAND_REGISTRY, filtre exclusions, produit _listing.md |
-| `generate_pages.py` | Scrape docs + COMMAND_REGISTRY + notes + examples, produit 47 .page.md |
+| `generate_listing.py` | Parse COMMAND_REGISTRY, filtre exclusions + gateway_only, produit _listing.md |
+| `generate_pages.py` | Parse COMMAND_REGISTRY + descriptions_longues.yaml + notes + examples, produit 49 .page.md |
 | `install.sh` | Copie wrapper dans PATH, pages dans share/, config dans .config/ |
 
 ## Mise à jour
@@ -82,7 +83,7 @@ Le script :
 3. Exécute `generate_pages.py` → `pages/*.page.md` (pages individuelles), nettoie les orphelines
 4. Compare `examples.yaml` avec les commandes actuelles et produit un rapport de diff
 
-Note : `generate_listing.py` applique les overrides de `overrides.yaml` (ex: args_hint personnalisé pour `/goal`).
+Note : `generate_listing.py` applique les overrides de `overrides.yaml` (ex: args_hint personnalisé).
 
 Le rapport de diff signale :
 - Nouvelles commandes sans exemples → le mainteneur ajoute manuellement dans `examples.yaml`
@@ -102,5 +103,5 @@ Un agent Hermes qui omet cette étape force le développeur à déboguer un prob
 
 ## Sources de données
 
-Voir `data_architecture.md` pour la description complète des 7 sources canoniques :
-docs page, COMMAND_REGISTRY, config.yaml, exclusions.yaml, overrides.yaml, notes.yaml, examples.yaml.
+Voir `data_architecture.md` pour la description complète des 6 sources :
+COMMAND_REGISTRY, descriptions_longues.yaml, exclusions.yaml, overrides.yaml, notes.yaml, examples.yaml.

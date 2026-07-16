@@ -14,22 +14,24 @@ $ tldrh
 /fast        Toggle fast mode                          [normal|fast|status]
 ...
 
-$ tldrh compress
-  Manually compress conversation context.
+$ tldrh journey
 
-  Compress the entire conversation:
+  A playable and editable timeline of the memories and skills Hermes has
+  learned with you over time.
 
-      /compress
+  Show the learning timeline:
 
-  Keep the last 5 exchanges verbatim:
+      /journey
 
-      /compress here 5
+  List all learned items:
+
+      /journey list
 ```
 
 ## Prerequisites
 
 - [tealdeer](https://github.com/dbrgn/tealdeer) (Rust `tldr` client) — installed via your package manager or cargo
-- Python 3.9+ with `requests`, `beautifulsoup4`, `lxml` and `pyyaml`
+- Python 3.9+ with `pyyaml`
 
 ## Installation
 
@@ -61,9 +63,6 @@ cp ~/.hermes/tldr-hermes/config.toml ~/.config/tldrh/config.toml
 mkdir -p ~/.local/share/tldrh/pages
 cp ~/.hermes/tldr-hermes/pages/*.page.md ~/.local/share/tldrh/pages/
 cp ~/.hermes/tldr-hermes/pages/_listing.md ~/.local/share/tldrh/pages/
-
-# Install Python dependencies
-pip install requests beautifulsoup4 lxml pyyaml
 ```
 
 > **Note:** `tldrh` coexists with your normal `tldr` command. `tldr` shows system command help (cp, ls, git...), `tldrh` shows Hermes slash commands.
@@ -72,8 +71,8 @@ pip install requests beautifulsoup4 lxml pyyaml
 
 ```
 tldrh                    List all Hermes commands by category
-tldrh /compress          Show help for /compress (slash optional)
-tldrh compress           Same as above
+tldrh /journey           Show help for /journey (slash optional)
+tldrh journey            Same as above
 tldrh --help             Show usage
 ```
 
@@ -86,26 +85,29 @@ cd ~/.hermes/tldr-hermes
 ./update.sh
 ```
 
-This regenerates all pages and the listing from current sources.
+This regenerates all pages and the listing from `COMMAND_REGISTRY` (no network calls).
 
 ## How It Works
 
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌──────────────────────┐
-│  hermets-agent/  │     │  generate_*.py   │     │  ~/.local/share/tldrh │
+│  hermes-agent/   │     │  generate_*.py   │     │  ~/.local/share/tldrh │
 │  commands.py     │────▶│                  │────▶│  /pages/*.page.md   │
 │  config.yaml     │     │  sources.py      │     │  /pages/_listing.md  │
-│  docs page       │     │                  │     │                      │
-│  notes.yaml      │     │  listing + pages │     │  tldrh (wrapper)     │
-│  examples.yaml   │     └──────────────────┘     │     │
-│  exclusions.yaml │                               │  tealdeer renders   │
-└─────────────────┘                               └──────────────────────┘
+│  descriptions    │     │                  │     │                      │
+│   _longues.yaml  │     │  listing + pages │     │  tldrh (wrapper)     │
+│  notes.yaml      │     └──────────────────┘     │     │
+│  examples.yaml   │                               │  tealdeer renders   │
+│  exclusions.yaml │                               └──────────────────────┘
+└─────────────────┘
 ```
 
 Two generators share a common `sources.py` module:
 
-- **`generate_listing.py`** — produces the 3-column category listing (`_listing.md`)
-- **`generate_pages.py`** — produces individual `.page.md` files for each command
+- **`generate_listing.py`** — parses `COMMAND_REGISTRY`, produces the 3-column category listing (`_listing.md`)
+- **`generate_pages.py`** — parses `COMMAND_REGISTRY` + `descriptions_longues.yaml`, produces individual `.page.md` files for each command
+
+No external dependencies beyond `pyyaml`. No network calls. All data comes from Hermes' own `commands.py` and local YAML files.
 
 The wrapper `tldrh` uses tealdeer as its rendering engine with a separate config (`~/.config/tldrh/`) so it never interferes with your normal `tldr` setup.
 
@@ -113,18 +115,20 @@ The wrapper `tldrh` uses tealdeer as its rendering engine with a separate config
 
 ```
 ~/.hermes/tldr-hermes/
-├── generate_listing.py     Listing generator
-├── generate_pages.py       Page generator
-├── sources.py              Shared data module
-├── exclusions.yaml         Commands to exclude
-├── notes.yaml              Dashboard exceptions
-├── examples.yaml           Command examples
-├── config.toml             tealdeer config template
-├── tldrh                   Wrapper script
-├── install.sh              Installation script
-├── update.sh               Regenerate everything
-├── README.md               This file
-└── pages/                  Generated output
+├── generate_listing.py          Listing generator
+├── generate_pages.py            Page generator
+├── sources.py                   Shared data module
+├── descriptions_longues.yaml    Long descriptions (frozen)
+├── exclusions.yaml              Commands to exclude
+├── notes.yaml                   Dashboard exceptions
+├── examples.yaml                Command examples
+├── overrides.yaml               Manual field overrides
+├── config.toml                  tealdeer config template
+├── tldrh                        Wrapper script
+├── install.sh                   Installation script
+├── update.sh                    Regenerate everything
+├── README.md                    This file
+└── pages/                       Generated output
     ├── _listing.md
     └── *.page.md
 ```
