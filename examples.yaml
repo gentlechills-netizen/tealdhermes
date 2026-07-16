@@ -232,6 +232,3 @@ verbose:
 version:
 - cmd: /version
   desc: ''
-whoami:
-- cmd: /whoami
-  desc: ''
