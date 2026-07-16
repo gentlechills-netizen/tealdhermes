@@ -1,0 +1,172 @@
+# descriptions_longues.yaml
+# Descriptions longues extraites de la page docs Hermes
+# (scrap unique le 16 juillet 2026 — source fige)
+# Utilisé par generate_pages.py pour > Description.
+# Si non listee, fallback sur la description courte COMMAND_REGISTRY.
+
+journey: A playable and editable timeline of the memories and skills Hermes has
+  learned with you over time.
+
+agents: Show active agents and running tasks across the current session.
+background: Run a prompt in a separate background session. The agent processes your
+  prompt independently — your current session stays free for other work. Results appear
+  as a panel when the task finishes. See CLI Background Sessions .
+billing: CLI terminal-billing flow for Nous — view balance, buy credits, and manage
+  auto-reload / monthly limits.
+blueprint: Set up an automation from a blueprint template. Bare /blueprint lists the
+  catalog; /blueprint <name> starts a guided slot-filling flow on the next agent turn;
+  /blueprint <name> slot=value ... creates the job directly.
+branch: Branch the current session (explore a different path)
+browser: 'Manage a local Chromium-family CDP connection. connect attaches browser
+  tools to a running Chrome, Brave, Chromium, or Edge instance (default: http://127.0.0.1:9222
+  ). disconnect detaches. status shows current connection. Auto-launches a supported
+  Chromium-family browser if no debugger is detected.'
+bundles: 'List configured skill bundles — /<name> slash aliases that preload several
+  skills at once. Configure under bundles: in ~/.hermes/config.yaml . See Skill Bundles
+  .'
+busy: 'CLI-only: control what pressing Enter does while Hermes is working — queue
+  the new message, steer mid-turn, or interrupt immediately.'
+clear: Clear screen and start a new session
+codex-runtime: Toggle the optional Codex app-server runtime for OpenAI/Codex models.
+  auto (default) uses Hermes' standard chat completions; codex_app_server hands turns
+  to a codex app-server subprocess for native shell, apply_patch, ChatGPT subscription
+  auth, and migrated Codex plugins. Effective on next session.
+compress: Manually compress conversation context (flush memories + summarize). /compress
+  here [N] summarizes everything except the most recent N exchanges (default 2), kept
+  verbatim — pick your own compression boundary. A focus topic narrows what a full
+  summary preserves.
+config: Show current configuration
+copy: Copy the last assistant response to clipboard (or the Nth-from-last with a number).
+  CLI-only.
+credits: Show your Nous credit balance and a top-up handoff link.
+cron: Manage scheduled tasks (list, add/create, edit, pause, resume, run, remove)
+curator: Background skill maintenance — status , run , pin , archive . See Curator
+  .
+debug: Upload debug report (system info + logs) and get shareable links. Also available
+  in messaging.
+fast: 'Toggle fast mode — OpenAI Priority Processing / Anthropic Fast Mode. Options:
+  normal , fast , status .'
+footer: Toggle the gateway runtime-metadata footer on final replies (shows model,
+  context %, and cwd).
+goal: 'Set a standing goal Hermes works toward across turns — our take on the Ralph
+  loop. After each turn an auxiliary judge model decides whether the goal is done;
+  if not, Hermes auto-continues. Subcommands: /goal status , /goal pause , /goal resume
+  , /goal clear . Budget defaults to 20 turns ( goals.max_turns ); any real user message
+  preempts the continuation loop, and state survives /resume . See Persistent Goals
+  for the full walkthrough.'
+handoff: CLI only. Hand the current session off to a messaging platform (Telegram,
+  Discord, Slack, WhatsApp, Signal, Matrix). The gateway picks it up immediately,
+  creates a fresh thread on platforms that support threads (Telegram topics, Discord
+  text-channel threads, Slack message-anchored threads), re-binds the destination
+  to your CLI session_id so the full role-aware transcript replays, and forges a synthetic
+  user turn so the agent confirms it's working in the new place. Your CLI exits cleanly
+  on success with a /resume hint; resume locally any time with /resume <title> . Refused
+  mid-turn. Requires the gateway to be running and a home channel configured for the
+  target platform ( /sethome from the destination chat). See Cross-Platform Handoff
+  .
+hatch: Generate a brand-new petdex pet from a text description, using the configured
+  image backend (OpenRouter / Nous Portal). See Pets .
+help: Show this help message
+history: Show conversation history
+image: Attach a local image file for your next prompt.
+indicator: 'CLI-only: pick the TUI busy-indicator style.'
+insights: Show usage insights and analytics (last 30 days)
+kanban: 'Drive the multi-profile, multi-project collaboration board without leaving
+  chat. Full hermes kanban surface is available: /kanban list , /kanban show t_abc
+  , /kanban create "title" --assignee X , /kanban comment t_abc "text" , /kanban unblock
+  t_abc , /kanban dispatch , etc. Multi-board support included: /kanban boards list
+  , /kanban boards create <slug> , /kanban boards switch <slug> , /kanban --board
+  <slug> <action> . See Kanban slash command .'
+learn: 'Distill a reusable skill from anything you describe — a directory, a URL,
+  the workflow you just walked the agent through, or pasted notes. Open-ended: the
+  agent gathers the sources with its own tools and authors a SKILL.md following the
+  house authoring standards. Works in the CLI, the messaging gateway, the TUI, and
+  the dashboard Skills page.'
+memory: Review pending memory writes staged by the write-approval gate ( memory.write_approval
+  ) and toggle the gate. See Controlling memory writes .
+moa: Run a single prompt through the default Mixture of Agents preset, then restore
+  your current model. One-shot — does not change your session model.
+model: 'Show or change the current model. Supports: /model claude-sonnet-4 , /model
+  provider:model (switch providers), /model custom:model (custom endpoint), /model
+  custom:name:model (named custom provider), /model custom (auto-detect from endpoint),
+  and user-defined aliases ( /model fav , /model grok — see Custom model aliases ).
+  Use --global to persist the change to config.yaml. Note: /model can only switch
+  between already-configured providers. To add a new provider, exit the session and
+  run hermes model from your terminal. Cost note: switching models mid-conversation
+  resets the prompt cache — the cache key includes the model, so your next turn re-reads
+  the entire conversation at full input price instead of the ~75%-discounted cached
+  rate. Expected and unavoidable, but worth knowing on long sessions.'
+new: Start a new session (fresh session ID + history). Optional [name] sets the initial
+  session title — e.g. /new my-experiment opens a fresh session already titled my-experiment
+  so it's easy to find later with /resume or /sessions . Append now , --yes , or -y
+  to skip the confirmation modal — e.g. /reset now , /new --yes my-experiment .
+paste: Attach a clipboard image
+personality: Set a predefined personality
+pet: Toggle or adopt a petdex mascot. /pet toggles the pane, /pet list shows installed
+  pets, /pet <slug> adopts a specific one.
+platforms: Show gateway/messaging platform status (CLI-only summary view).
+plugins: List installed plugins and their status
+profile: Show active profile name and home directory
+prompt: Compose your next prompt in $EDITOR (markdown) instead of the inline input
+  — useful for long, multi-line, or carefully-formatted prompts.
+queue: Queue a prompt for the next turn (doesn't interrupt the current agent response).
+quit: 'Exit the CLI (also: /exit ).'
+reasoning: 'Manage reasoning effort and display (usage: /reasoning [level|show|hide])'
+redraw: Force a full UI repaint (recovers from terminal drift after tmux resize, mouse
+  selection artifacts, etc.)
+reload: Reload .env variables into the running session (picks up new API keys without
+  restarting)
+reload-mcp: Reload MCP servers from config.yaml
+reload-skills: Re-scan ~/.hermes/skills/ for newly installed or removed skills
+resume: Resume a previously-named session
+retry: Retry the last message (resend to agent)
+rollback: 'List or restore filesystem checkpoints (usage: /rollback [number])'
+save: Save the current conversation
+sessions: 'Classic CLI: browse and resume previous sessions in an interactive picker.
+  TUI: open the live session switcher for currently open TUI sessions. Use /sessions
+  new in the TUI to start another live session immediately.'
+skills: Search, browse, inspect, install, audit, publish, and configure skills from
+  registries and the official optional-skills catalog.
+skin: Show or change the display skin/theme
+snapshot: Create or restore state snapshots of Hermes config/state. create [label]
+  saves a snapshot, restore <id> reverts to it, prune [N] removes old snapshots, or
+  list all with no args.
+status: Show session info — model, provider, profile, session ID, working directory,
+  title, created/updated timestamps, token totals, agent-running state — followed
+  by a local Session recap block (recent user/assistant turn counts, tool result count,
+  top tools used, last few files touched, the latest user prompt, and the latest assistant
+  reply). The recap is computed locally from the in-memory conversation; no LLM call,
+  no prompt-cache impact.
+statusbar: Toggle the context/model status bar on or off
+steer: Inject a mid-run note that arrives at the agent after the next tool call —
+  no interrupt, no new user turn. The text is appended to the last tool result's content
+  once the current tool completes, giving the agent new context without breaking the
+  current tool-calling loop. Use this to nudge direction mid-task (e.g. "focus on
+  the auth module" while the agent is running tests).
+stop: Kill all running background processes
+subgoal: 'Append a user-supplied criterion to the active goal mid-loop. The continuation
+  prompt surfaces all subgoals to the agent verbatim, and the judge factors them into
+  its DONE/CONTINUE verdict — so the goal isn''t marked done until the original goal
+  and every subgoal are met. Subcommands: /subgoal (list), /subgoal remove <N> , /subgoal
+  clear . Requires an active /goal .'
+suggestions: Review suggested automations. Use /suggestions to list pending suggestions,
+  /suggestions accept <id> to create the proposed automation, /suggestions dismiss
+  <id> to reject one, /suggestions catalog to add curated starter automations, and
+  /suggestions clear to clear resolved suggestion records. Accepted jobs preserve
+  the current surface as the delivery origin.
+timestamps: 'CLI-only: toggle [HH:MM] timestamps on messages and in /history .'
+title: 'Set a title for the current session (usage: /title My Session Name)'
+tools: 'Manage tools: list available tools, or disable/enable specific tools for the
+  current session. Disabling a tool removes it from the agent''s toolset and triggers
+  a session reset.'
+toolsets: List available toolsets
+undo: Remove the last user/assistant exchange
+usage: Show token usage, cost breakdown, session duration, and — when available from
+  the active provider — an Account limits section with remaining quota / credits /
+  plan usage pulled live from the provider's API.
+verbose: 'Cycle tool progress display: off → new → all → verbose. Can be enabled for
+  messaging via config.'
+version: Show Hermes Agent version, build, and environment info.
+voice: 'Toggle CLI voice mode and spoken playback. Recording uses voice.record_key
+  (default: Ctrl+B ).'
+yolo: Toggle YOLO mode — skip all dangerous command approval prompts.

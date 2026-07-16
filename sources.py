@@ -16,7 +16,6 @@ HERMES_HOME = os.path.expanduser("~/.hermes")
 TLDRH_DIR = os.path.join(HERMES_HOME, "tldr-hermes")
 COMMANDS_PY = os.path.join(HERMES_HOME, "hermes-agent", "hermes_cli", "commands.py")
 CONFIG_YAML = os.path.join(HERMES_HOME, "config.yaml")
-DOCS_URL = "https://hermes-agent.nousresearch.com/docs/reference/slash-commands"
 
 # Paths relatifs au projet tldr-hermes
 EXCLUSIONS_YAML = os.path.join(TLDRH_DIR, "exclusions.yaml")
@@ -24,81 +23,11 @@ NOTES_YAML = os.path.join(TLDRH_DIR, "notes.yaml")
 EXAMPLES_YAML = os.path.join(TLDRH_DIR, "examples.yaml")
 OVERRIDES_YAML = os.path.join(TLDRH_DIR, "overrides.yaml")
 
-# Catégories CLI (hors messaging) — ordre d'affichage du listing
-CLI_CATEGORIES = {
-    "Session", "Configuration", "Tools & Skills",
-    "Info", "Exit", "Dynamic CLI slash commands",
-}
+# Ordre d'affichage du listing
 CATEGORY_ORDER = [
     "Session", "Configuration", "Tools & Skills",
     "Info", "Exit", "Dynamic CLI slash commands",
 ]
-
-
-# ═══════════════════════════════════════════════════════════════════════
-# PAGE DOCS OFFICIELLE (catégories + descriptions longues)
-# ═══════════════════════════════════════════════════════════════════════
-
-def fetch_docs_page():
-    """Scraper la page docs pour catégories et descriptions longues.
-
-    Retourne : list of (name, full_description, category)
-    """
-    try:
-        import requests
-        from bs4 import BeautifulSoup
-    except ImportError:
-        print("❌ Installe requests + beautifulsoup4 : pip install requests beautifulsoup4 lxml")
-        sys.exit(1)
-
-    try:
-        resp = requests.get(DOCS_URL, headers={"User-Agent": "tldr-hermes/2.0"}, timeout=15)
-        resp.raise_for_status()
-    except Exception as e:
-        print(f"❌ Échec du fetch docs page : {e}")
-        sys.exit(1)
-
-    soup = BeautifulSoup(resp.text, "lxml")
-    content = soup.find("div", class_="theme-doc-markdown")
-    if not content:
-        print("❌ Structure .theme-doc-markdown introuvable")
-        sys.exit(1)
-
-    commands = []
-    current_cat = None
-    in_messaging = False
-
-    for el in content.children:
-        if el.name == "h2":
-            text = el.get_text(strip=True)
-            if "Messaging" in text:
-                in_messaging = True
-            continue
-
-        if in_messaging:
-            continue
-
-        if el.name == "h3":
-            text = el.get_text(strip=True).rstrip("\u200b").strip()
-            current_cat = text if text in CLI_CATEGORIES else None
-            continue
-
-        if el.name == "table" and current_cat:
-            for row in el.find_all("tr")[1:]:
-                cells = row.find_all("td")
-                if len(cells) < 2:
-                    continue
-                code = cells[0].find("code")
-                if not code:
-                    continue
-                m = re.match(r"^/([a-z][a-z0-9_-]*)", code.get_text(strip=True))
-                if m:
-                    name = m.group(1)
-                    desc = cells[1].get_text(separator=" ", strip=True)
-                    desc = re.sub(r"\s+", " ", desc).strip()
-                    commands.append((name, desc, current_cat))
-
-    return commands
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -148,13 +77,15 @@ def parse_command_defs():
         if len(parts) >= 1:
             name = parts[0]
             desc = parts[1] if len(parts) >= 2 else ""
-            hint_m = re.search(r'args_hint="([^"]*)"', block)
+            category = parts[2] if len(parts) >= 3 else ""
+            hint_m = re.search('args_hint="([^"]*)"', block)
             aliases_m = re.search(r"aliases=\(([^)]*)\)", block)
             cli_only = "cli_only=True" in block
             gateway_only = "gateway_only=True" in block
 
             defs[name] = {
                 "description": desc,
+                "category": category,
                 "args_hint": hint_m.group(1) if hint_m else "",
                 "aliases": re.findall(r'"([^"]+)"', aliases_m.group(1)) if aliases_m else [],
                 "cli_only": cli_only,
@@ -245,6 +176,24 @@ def load_examples():
     if not os.path.exists(EXAMPLES_YAML):
         return {}
     with open(EXAMPLES_YAML) as f:
+        data = yaml.safe_load(f) or {}
+    return data
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# DESCRIPTIONS LONGUES (source figée depuis la page docs)
+# ═══════════════════════════════════════════════════════════════════════
+
+def load_long_descriptions():
+    """Charger les descriptions longues figées.
+
+    Retourne : dict of name -> str — description longue par commande.
+    Si le fichier n'existe pas, retourne dict vide (fallback inoffensif).
+    """
+    path = os.path.join(TLDRH_DIR, "descriptions_longues.yaml")
+    if not os.path.exists(path):
+        return {}
+    with open(path) as f:
         data = yaml.safe_load(f) or {}
     return data
 

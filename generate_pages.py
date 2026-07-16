@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
 generate_pages.py — Volet 2 : Pages individuelles /<command>
-Produit les 63 fichiers .page.md au format OG tldr.
+Produit les fichiers .page.md au format OG tldr.
 
 Sources :
-  - Page docs /reference/slash-commands (descriptions longues)
-  - COMMAND_REGISTRY (args_hint, aliases, disponibilité)
+  - COMMAND_REGISTRY (descriptions, args_hint, aliases, disponibilité)
   - config.yaml (clés top-level → Dashboard)
   - notes.yaml (exceptions Dashboard + notes spéciales)
   - examples.yaml (0-4 exemples par commande)
-  - exclusions.yaml (9 commandes à exclure)
+  - exclusions.yaml (commandes à exclure)
 
 Sortie : ~/.hermes/tldr-hermes/pages/<commande>.page.md
 """
@@ -19,11 +18,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sources import (
-    fetch_docs_page,
     parse_command_defs,
     load_exclusions,
     load_notes,
     load_examples,
+    load_long_descriptions,
     get_config_top_keys,
     first_sentence,
     availability_label,
@@ -78,8 +77,6 @@ def generate_page(name, full_desc, defn, notes, examples, config_keys):
     lines.append(f"> Available: {avail}")
 
     # ── 5. Dashboard ──────────────────────────────────────────────────
-    # Si commande a une note dans notes.yaml → PAS de Dashboard générique
-    # (la note couvre déjà le redirect dans la section Notes)
     if name not in notes and name in config_keys:
         lines.append("")
         lines.append(DASHBOARD_DEFAULT)
@@ -89,8 +86,6 @@ def generate_page(name, full_desc, defn, notes, examples, config_keys):
         lines.append("")
         for note in notes[name]:
             if isinstance(note, dict):
-                # YAML a parsé "Also configurable in: X" comme un mapping
-                # → reconstruire la chaîne originale
                 note = ", ".join(f"{k}: {v}" for k, v in note.items())
             lines.append(f"> {note}")
 
@@ -112,10 +107,6 @@ def generate_page(name, full_desc, defn, notes, examples, config_keys):
 
 
 def main():
-    print("📡 Fetch docs page...")
-    docs_cmds = fetch_docs_page()
-    print(f"   → {len(docs_cmds)} commandes trouvées\n")
-
     print("📖 Reading COMMAND_REGISTRY...")
     cmd_defs = parse_command_defs()
     print(f"   → {len(cmd_defs)} CommandDef trouvés\n")
@@ -136,22 +127,20 @@ def main():
     examples = load_examples()
     print(f"   → {len(examples)} commandes avec exemples\n")
 
+    print("📖 Loading long descriptions...")
+    long_descs = load_long_descriptions()
+    print(f"   → {len(long_descs)} descriptions longues\n")
+
     # ── Cross-référence ───────────────────────────────────────────────
     all_commands = []
-    missing_defs = []
-    for name, full_desc, cat in docs_cmds:
+    for name, d in cmd_defs.items():
         if name in excluded:
-            continue
-        d = cmd_defs.get(name)
-        if not d:
-            missing_defs.append(name)
             continue
         if d.get("gateway_only"):
             continue
+        cat = d.get("category", "Uncategorized")
+        full_desc = long_descs.get(name, d["description"])
         all_commands.append((name, full_desc, cat, d))
-
-    if missing_defs:
-        print(f"\n⚠ Commandes sans CommandDef : {missing_defs}")
 
     # ── Génération ────────────────────────────────────────────────────
     os.makedirs(PAGES_DIR, exist_ok=True)

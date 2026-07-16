@@ -4,9 +4,9 @@ generate_listing.py — Volet 1 : Listing tldrh
 Produit _listing.md à partir des sources canoniques.
 
 Sources :
-  - Page docs /reference/slash-commands (catégories)
-  - COMMAND_REGISTRY (descriptions courtes + args_hint)
-  - exclusions.yaml (9 commandes manuelles)
+  - COMMAND_REGISTRY (catégories, descriptions, args_hint)
+  - exclusions.yaml (commandes manuelles)
+  - overrides.yaml (remplacements manuels)
 
 Sortie : fichier texte 3 colonnes par catégorie.
   === Session ===
@@ -16,10 +16,8 @@ Sortie : fichier texte 3 colonnes par catégorie.
 import os
 import sys
 
-# Ajouter le répertoire du projet au path pour l'import de sources
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sources import (
-    fetch_docs_page,
     parse_command_defs,
     load_exclusions,
     load_overrides,
@@ -31,17 +29,17 @@ TLDRH_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.path.join(TLDRH_DIR, "pages", "_listing.md")
 
 
-def build_listing(commands, cmd_defs, excluded, overrides=None):
-    """Assembler le listing 3 colonnes par catégorie."""
+def build_listing(cmd_defs, excluded, overrides=None):
+    """Assembler le listing 3 colonnes par catégorie depuis COMMAND_REGISTRY."""
     if overrides is None:
         overrides = {}
     by_cat = {}
-    for name, _, cat in commands:
+    for name, d in cmd_defs.items():
         if name in excluded:
             continue
-        d = cmd_defs.get(name, {"args_hint": "", "gateway_only": False})
         if d.get("gateway_only"):
             continue
+        cat = d.get("category", "Uncategorized")
         by_cat.setdefault(cat, []).append((name, d))
 
     lines = []
@@ -51,11 +49,9 @@ def build_listing(commands, cmd_defs, excluded, overrides=None):
         lines.append(f"=== {cat} ===")
         for name, d in sorted(by_cat[cat]):
             short = short_description(d.get("description", "")) or "-"
-            # Override manuel pour short (description affichée)
             if name in overrides and "short" in overrides.get(name, {}):
                 short = overrides[name]["short"]
             hint = d.get("args_hint", "") or "-"
-            # Override manuel pour args_hint
             if name in overrides and "args_hint" in overrides.get(name, {}):
                 hint = overrides[name]["args_hint"]
             lines.append(f"/{name:<20} {short:<64} {hint}")
@@ -65,10 +61,6 @@ def build_listing(commands, cmd_defs, excluded, overrides=None):
 
 
 def main():
-    print("📡 Fetch docs page...")
-    docs_cmds = fetch_docs_page()
-    print(f"   → {len(docs_cmds)} commandes trouvées\n")
-
     print("📖 Reading COMMAND_REGISTRY...")
     cmd_defs = parse_command_defs()
     print(f"   → {len(cmd_defs)} CommandDef trouvés\n")
@@ -81,7 +73,7 @@ def main():
     overrides = load_overrides()
     print(f"   → {len(overrides)} commandes avec overrides\n")
 
-    listing = build_listing(docs_cmds, cmd_defs, excluded, overrides)
+    listing = build_listing(cmd_defs, excluded, overrides)
 
     os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
     with open(OUTPUT, "w") as f:

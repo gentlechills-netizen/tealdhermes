@@ -62,7 +62,7 @@ export SCRIPT_DIR REPORTS_DIR
 python3 << 'PYEOF'
 import os, sys, yaml, datetime
 sys.path.insert(0, os.environ['SCRIPT_DIR'])
-from sources import parse_command_defs, load_examples, load_exclusions, fetch_docs_page
+from sources import parse_command_defs, load_examples, load_exclusions
 
 timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 reports_dir = os.environ['REPORTS_DIR']
@@ -71,14 +71,12 @@ report_path = os.path.join(reports_dir, f'examples-diff-{timestamp}.md')
 # Load current commands
 excluded = load_exclusions()
 cmd_defs = parse_command_defs()
-docs_cmds = fetch_docs_page()
 
 current = set()
-for name, full_desc, cat in docs_cmds:
+for name, d in cmd_defs.items():
     if name in excluded:
         continue
-    d = cmd_defs.get(name)
-    if not d or d.get('gateway_only'):
+    if d.get('gateway_only'):
         continue
     current.add(name)
 
@@ -157,7 +155,7 @@ if orphaned:
 if new_cmds and orphaned:
     updated = sorted(current)
 elif new_cmds:
-    updated = sorted(current - orphaned)
+    updated = sorted(current - set(orphaned))
 else:
     updated = sorted(current)
 

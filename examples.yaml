@@ -67,6 +67,15 @@ image:
   desc: 'Attach a local image for the next prompt:'
 - cmd: /image photo.jpg
   desc: 'Attach a JPEG from the current directory:'
+journey:
+- cmd: /journey
+  desc: 'Show the learning timeline:'
+- cmd: /journey list
+  desc: 'List all learned items:'
+- cmd: /journey delete <id>
+  desc: 'Delete a specific item from the timeline:'
+- cmd: /journey edit <id>
+  desc: 'Edit a specific items label:'
 insights:
 - cmd: /insights 7
   desc: 'Display insights for the last 7 days:'
@@ -211,6 +220,9 @@ undo:
   desc: 'Undo the most recent turn:'
 - cmd: /undo 3
   desc: 'Undo the last 3 turns:'
+update:
+- cmd: /update
+  desc: ''
 usage:
 - cmd: /usage
   desc: ''
@@ -219,4 +231,7 @@ verbose:
   desc: ''
 version:
 - cmd: /version
+  desc: ''
+whoami:
+- cmd: /whoami
   desc: ''
