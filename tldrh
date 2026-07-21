@@ -37,6 +37,22 @@ case "${1:-}" in
         show_listing
         ;;
     *)
+        # Chercher la page dans le répertoire custom seulement
+        PAGE_NAME="${1//\//-}"
+        CUSTOM_PAGES=$(grep "^custom_pages_dir" "$CONFIG_DIR/config.toml" 2>/dev/null | cut -d= -f2 | tr -d ' "')
+        CUSTOM_PAGES="${CUSTOM_PAGES/#\~/$HOME}"
+        if [ -n "$CUSTOM_PAGES" ]; then
+            FOUND=$(find "$CUSTOM_PAGES" -name "${PAGE_NAME}.page.md" -o -name "${PAGE_NAME}.md" 2>/dev/null | head -1)
+            if [ -z "$FOUND" ]; then
+                echo "❌ Page Hermes introuvable pour « $1 »"
+                echo ""
+                echo "  Commandes CLI : tldrhc <commande>  (ex: tldrhc chat)"
+                echo "  Commandes TUI  : tldrh  <commande>  (ex: tldrh /model)"
+                echo ""
+                echo "  Voir la liste complète : tldrh"
+                exit 1
+            fi
+        fi
         TEALDEER_CONFIG_DIR="$CONFIG_DIR" tldr "$@"
         ;;
 esac
