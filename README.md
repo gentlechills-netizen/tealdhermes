@@ -89,6 +89,8 @@ This regenerates all pages and the listing from `COMMAND_REGISTRY` (no network c
 
 ## How It Works
 
+The wrapper `tldrh` searches only the custom pages directory. If a page isn't found, it shows a clear error (no fallback to system tldr pages).
+
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌──────────────────────┐
 │  hermes-agent/   │     │  generate_*.py   │     │  ~/.local/share/tldrh │
