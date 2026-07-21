@@ -99,18 +99,16 @@ moa:
 - cmd: /moa "How would you optimize this SQL query?"
   desc: 'Get multiple perspectives on a coding problem:'
 model:
-- cmd: /model claude-sonnet-4
-  desc: 'Switch to a specific model (current session only):'
-- cmd: /model openai/gpt-4o
-  desc: 'Switch provider and model (current session only):'
+- cmd: /model
+  desc: 'Open the interactive model picker:'
+- cmd: /model deepseek-v4-flash
+  desc: 'Switch model on current provider (current session only):'
 - cmd: /model deepseek-mix --provider moa
-  desc: 'Switch to a MoA preset:'
-- cmd: /model --provider moa
-  desc: 'Pick a MoA preset interactively:'
-- cmd: /model claude-sonnet-4 --global
+  desc: 'Switch to a MoA preset (current session only):'
+- cmd: /model deepseek-v4-flash --global
   desc: 'Persist the change to config.yaml (permanent):'
-- cmd: /model --refresh
-  desc: 'Refresh the available model list:'
+- cmd: /model anthropic/claude-sonnet-4 --provider openrouter
+  desc: 'Switch provider and model explicitly (current session only):'
 new:
 - cmd: /new
   desc: 'Start a fresh session:'

@@ -8,6 +8,8 @@ model:
   - Also configurable in: CRON, PROFILES, KEYS menus.
   - /model can only switch between already-configured providers.
     Use /config to view current configuration and /reasoning to adjust reasoning effort.
+  - MoA presets via --provider moa (session-scoped).
+    Use /moa <prompt> for one-shot MoA.
 
 cron:
   - Command status and configuration in Hermes Web Dashboard.
@@ -50,5 +52,4 @@ reasoning:
   - Related commands: /model — Show or change the current LLM model. /config — View current configuration details.
 
 moa:
-  - Presets also selectable via /model --provider moa for interactive picker,
-    or /model <preset> --provider moa for direct selection.
+  - "One-shot only — restores your previous model after this turn. For persistent MoA sessions: /model <preset> --provider moa"
