@@ -103,6 +103,10 @@ model:
   desc: 'Switch to a specific model:'
 - cmd: /model openai/gpt-4o
   desc: 'Switch provider and model:'
+- cmd: /model deepseek-mix --provider moa
+  desc: 'Switch to a MoA preset permanently:'
+- cmd: /model --provider moa
+  desc: 'Pick a MoA preset interactively:'
 - cmd: /model claude-sonnet-4 --global
   desc: 'Persist the change to config.yaml:'
 - cmd: /model --refresh

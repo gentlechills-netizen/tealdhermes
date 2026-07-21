@@ -48,3 +48,7 @@ snapshot:
 
 reasoning:
   - Related commands: /model — Show or change the current LLM model. /config — View current configuration details.
+
+moa:
+  - Presets also selectable via /model --provider moa for interactive picker,
+    or /model <preset> --provider moa for direct selection.
