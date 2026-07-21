@@ -95,9 +95,9 @@ learn:
   desc: 'Learn from the current conversation workflow:'
 moa:
 - cmd: /moa "Explain quantum entanglement to a 10-year-old"
-  desc: 'Run a prompt through Mixture of Agents:'
-- cmd: /moa "How would you optimize this SQL query?"
-  desc: 'Get multiple perspectives on a coding problem:'
+  desc: 'Run a prompt through Mixture of Agents (one-shot, restores previous model):'
+- cmd: /model deepseek-mix --provider moa
+  desc: 'Switch to a MoA preset for the session:'
 model:
 - cmd: /model
   desc: 'Open the interactive model picker:'
