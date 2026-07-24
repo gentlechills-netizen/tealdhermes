@@ -53,3 +53,4 @@ reasoning:
 
 moa:
   - "One-shot only — restores your previous model after this turn. For persistent MoA sessions: /model <preset> --provider moa"
+

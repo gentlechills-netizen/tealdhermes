@@ -24,8 +24,7 @@ reload-mcp:
   ignore: true
 browser:
   ignore: true
-background:
-  ignore: true
+
 branch:
   ignore: true
 bundles:

@@ -1,6 +1,9 @@
 agents:
 - cmd: /agents
   desc: ''
+background:
+- desc: 'Run a task in a separate background session:'
+  cmd: /background "Install dependencies and run tests"
 billing:
 - cmd: /billing
   desc: ''

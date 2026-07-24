@@ -8,9 +8,7 @@ journey: A playable and editable timeline of the memories and skills Hermes has
   learned with you over time.
 
 agents: Show active agents and running tasks across the current session.
-background: Run a prompt in a separate background session. The agent processes your
-  prompt independently — your current session stays free for other work. Results appear
-  as a panel when the task finishes. See CLI Background Sessions .
+background: Run a prompt in a separate background session. The agent processes your prompt independently — your current session stays free for other work. Results appear as a panel when the task finishes.
 billing: CLI terminal-billing flow for Nous — view balance, buy credits, and manage
   auto-reload / monthly limits.
 blueprint: Set up an automation from a blueprint template. Bare /blueprint lists the
