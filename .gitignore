@@ -11,6 +11,7 @@ reports/
 *.swp
 *.swo
 *~
+*.yaml_backup_*
 
 # OS
 .DS_Store

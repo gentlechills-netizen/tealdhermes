@@ -4,9 +4,6 @@ agents:
 background:
 - desc: 'Run a task in a separate background session:'
   cmd: /background "Install dependencies and run tests"
-billing:
-- cmd: /billing
-  desc: ''
 busy:
 - cmd: /busy queue
   desc: 'Queue a prompt for the next turn instead of interrupting:'
@@ -34,9 +31,6 @@ copy:
   desc: 'Copy the most recent response:'
 - cmd: /copy 3
   desc: 'Copy a specific response by index:'
-credits:
-- cmd: /credits
-  desc: ''
 cron:
 - cmd: /cron list
   desc: 'List all scheduled tasks:'
