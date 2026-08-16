@@ -2,8 +2,13 @@ agents:
 - cmd: /agents
   desc: ''
 background:
-- desc: 'Run a task in a separate background session:'
-  cmd: /background "Install dependencies and run tests"
+- cmd: /background "Install dependencies and run tests"
+  desc: 'Run a task in a separate background session:'
+branch:
+- cmd: /branch
+  desc: 'Branch current session:'
+- cmd: /branch {{branch-name}}
+  desc: 'Branch with a name:'
 busy:
 - cmd: /busy queue
   desc: 'Queue a prompt for the next turn instead of interrupting:'
@@ -26,27 +31,26 @@ compress:
 config:
 - cmd: /config
   desc: ''
+context:
+- cmd: /context
+  desc: 'Show the context window usage breakdown:'
+- cmd: /context all
+  desc: 'Include per-skill and per-toolset cost details:'
 copy:
 - cmd: /copy
   desc: 'Copy the most recent response:'
 - cmd: /copy 3
   desc: 'Copy a specific response by index:'
-cron:
-- cmd: /cron list
-  desc: 'List all scheduled tasks:'
-- cmd: /cron create
-  desc: 'Create a new recurring task:'
-- cmd: /cron pause compress-daily
-  desc: 'Pause a task without deleting it:'
-- cmd: /cron remove compress-daily
-  desc: 'Remove a task:'
-fast:
-- cmd: /fast fast
-  desc: 'Enable fast mode (priority processing):'
-- cmd: /fast normal
-  desc: 'Disable fast mode (normal priority):'
-- cmd: /fast status
-  desc: 'Check current fast mode status:'
+curator:
+- cmd: /curator status
+  desc: 'Show curator status:'
+- cmd: /curator run
+  desc: 'Run curator:'
+focus:
+- cmd: /focus
+  desc: 'Toggle focus view (show only your prompt and the final response):'
+- cmd: /focus status
+  desc: 'Show the current focus state:'
 goal:
 - cmd: /goal refactor the login module
   desc: 'Set a new goal:'
@@ -56,14 +60,14 @@ goal:
   desc: 'Check whether the current goal is complete:'
 - cmd: /goal pause
   desc: 'Pause the goal loop without clearing it:'
-help:
-- cmd: /help
-  desc: ''
 image:
 - cmd: /image ~/Pictures/screenshot.png
   desc: 'Attach a local image for the next prompt:'
 - cmd: /image photo.jpg
   desc: 'Attach a JPEG from the current directory:'
+insights:
+- cmd: /insights 7
+  desc: 'Display insights for the last 7 days:'
 journey:
 - cmd: /journey
   desc: 'Show the learning timeline:'
@@ -73,9 +77,6 @@ journey:
   desc: 'Delete a specific item from the timeline:'
 - cmd: /journey edit <id>
   desc: 'Edit a specific items label:'
-insights:
-- cmd: /insights 7
-  desc: 'Display insights for the last 7 days:'
 kanban:
 - cmd: /kanban
   desc: 'Show the current board:'
@@ -90,6 +91,15 @@ learn:
   desc: 'Learn from a project directory:'
 - cmd: /learn "the debugging workflow we just used"
   desc: 'Learn from the current conversation workflow:'
+loop:
+- cmd: /loop 5m {{check email}}
+  desc: 'Loop a prompt every 5 minutes:'
+- cmd: /loop {{run tests}} --times 3
+  desc: 'Loop 3 times:'
+- cmd: /loop {{fetch status}} --until {{status == done}}
+  desc: 'Loop until condition:'
+- cmd: /loop status
+  desc: 'Show loop status:'
 moa:
 - cmd: /moa "Explain quantum entanglement to a 10-year-old"
   desc: 'Run a prompt through Mixture of Agents (one-shot, restores previous model):'
@@ -114,11 +124,6 @@ new:
 paste:
 - cmd: /paste
   desc: ''
-personality:
-- cmd: /personality
-  desc: 'List available personalities:'
-- cmd: /personality claude
-  desc: 'Switch to a specific personality:'
 plugins:
 - cmd: /plugins
   desc: ''
@@ -140,21 +145,22 @@ quit:
   desc: 'Exit the current session:'
 - cmd: /quit --delete
   desc: 'Exit and delete the session history:'
-reasoning:
-- cmd: /reasoning show
-  desc: 'Show reasoning tokens inline with responses:'
-- cmd: /reasoning hide
-  desc: 'Hide reasoning tokens from responses:'
-- cmd: /reasoning high
-  desc: 'Set reasoning effort (low, medium, high, extra-high):'
-- cmd: /reasoning clamp 2000
-  desc: 'Clamp reasoning to a maximum token budget:'
 redraw:
 - cmd: /redraw
   desc: ''
+refine:
+- cmd: /refine
+  desc: 'Refine conversation to memory:'
+- cmd: /refine {{focus on deployment steps}}
+  desc: 'Refine with focus:'
 reload:
 - cmd: /reload
   desc: ''
+resume:
+- cmd: /resume
+  desc: 'Resume last session:'
+- cmd: /resume {{session-name}}
+  desc: 'Resume a named session:'
 retry:
 - cmd: /retry
   desc: ''
@@ -187,9 +193,19 @@ status:
 statusbar:
 - cmd: /statusbar
   desc: ''
+steer:
+- cmd: /steer {{focus on the auth module}}
+  desc: 'Steer agent mid-task:'
 stop:
 - cmd: /stop
   desc: ''
+suggestions:
+- cmd: /suggestions
+  desc: 'List pending suggestions:'
+- cmd: /suggestions accept {{id}}
+  desc: 'Accept a suggestion:'
+- cmd: /suggestions dismiss {{id}}
+  desc: 'Dismiss a suggestion:'
 timestamps:
 - cmd: /timestamps on
   desc: 'Show timestamps on all messages:'

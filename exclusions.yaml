@@ -14,8 +14,6 @@ codex-runtime:
   ignore: true
 blueprint:
   ignore: true
-curator:
-  ignore: true
 debug:
   ignore: true
 handoff:
@@ -24,9 +22,13 @@ reload-mcp:
   ignore: true
 browser:
   ignore: true
-
-branch:
+export:
   ignore: true
+heartbeat:
+  ignore: true
+import:
+  ignore: true
+
 bundles:
   ignore: true
 history:
@@ -39,15 +41,9 @@ platforms:
   ignore: true
 reload-skills:
   ignore: true
-resume:
-  ignore: true
 skin:
   ignore: true
-steer:
-  ignore: true
 subgoal:
-  ignore: true
-suggestions:
   ignore: true
 voice:
   ignore: true
@@ -68,4 +64,24 @@ egress:
 subscription:
   ignore: true
 topup:
+  ignore: true
+init:
+  ignore: true
+wake:
+  ignore: true
+
+# Exclues le 2026-08-16 - commandes non utilisées par Patrick
+approvals:
+  ignore: true
+fast:
+  ignore: true
+personality:
+  ignore: true
+reasoning:
+  ignore: true
+cron:
+  ignore: true
+diff:
+  ignore: true
+help:
   ignore: true
