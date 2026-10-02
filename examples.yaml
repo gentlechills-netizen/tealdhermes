@@ -1,14 +1,17 @@
 agents:
 - cmd: /agents
   desc: ''
-background:
-- cmd: /background "Install dependencies and run tests"
+bg:
+- cmd: /bg "Install dependencies and run tests"
   desc: 'Run a task in a separate background session:'
 branch:
 - cmd: /branch
   desc: 'Branch current session:'
 - cmd: /branch {{branch-name}}
   desc: 'Branch with a name:'
+btw:
+- cmd: /btw {{which file handles auth}}
+  desc: 'Ask a side question without interrupting the conversation:'
 busy:
 - cmd: /busy queue
   desc: 'Queue a prompt for the next turn instead of interrupting:'
@@ -124,6 +127,9 @@ new:
 paste:
 - cmd: /paste
   desc: ''
+plan:
+- cmd: /plan {{add OAuth login}}
+  desc: 'Write an implementation plan without executing it:'
 plugins:
 - cmd: /plugins
   desc: ''
@@ -164,6 +170,9 @@ resume:
 retry:
 - cmd: /retry
   desc: ''
+review:
+- cmd: /review {{check the error handling}}
+  desc: 'Spawn an independent subagent to review the work:'
 rollback:
 - cmd: /rollback
   desc: 'List available checkpoints:'
