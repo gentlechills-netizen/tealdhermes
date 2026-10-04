@@ -55,10 +55,6 @@ footer:
   ignore: true
 battery:
   ignore: true
-billing:
-  ignore: true
-credits:
-  ignore: true
 egress:
   ignore: true
 subscription:
