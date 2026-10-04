@@ -8,6 +8,7 @@ journey: A playable and editable timeline of the memories and skills Hermes has
   learned with you over time.
 
 agents: Show active agents and running tasks across the current session.
+approvals: 'Show or set the persistent dangerous-command approval mode: manual prompts for every flagged command, smart delegates the verdict to an auxiliary LLM, off never prompts (hardline blocklist still applies).'
 background: Run a prompt in a separate background session. The agent processes your prompt independently — your current session stays free for other work. Results appear as a panel when the task finishes.
 billing: CLI terminal-billing flow for Nous — view balance, buy credits, and manage
   auto-reload / monthly limits.
@@ -52,7 +53,7 @@ goal: 'Set a standing goal Hermes works toward across turns — our take on the 
   , /goal clear . Budget defaults to 20 turns ( goals.max_turns ); any real user message
   preempts the continuation loop, and state survives /resume . See Persistent Goals
   for the full walkthrough.'
-handoff: CLI only. Hand the current session off to a messaging platform (Telegram,
+handoff: Hand the current session off to a messaging platform (Telegram,
   Discord, Slack, WhatsApp, Signal, Matrix). The gateway picks it up immediately,
   creates a fresh thread on platforms that support threads (Telegram topics, Discord
   text-channel threads, Slack message-anchored threads), re-binds the destination
@@ -147,6 +148,7 @@ subgoal: 'Append a user-supplied criterion to the active goal mid-loop. The cont
   its DONE/CONTINUE verdict — so the goal isn''t marked done until the original goal
   and every subgoal are met. Subcommands: /subgoal (list), /subgoal remove <N> , /subgoal
   clear . Requires an active /goal .'
+subscription: View your Nous plan and change it in the browser (also available as /upgrade).
 suggestions: Review suggested automations. Use /suggestions to list pending suggestions,
   /suggestions accept <id> to create the proposed automation, /suggestions dismiss
   <id> to reject one, /suggestions catalog to add curated starter automations, and
