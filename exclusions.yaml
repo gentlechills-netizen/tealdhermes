@@ -85,3 +85,9 @@ diff:
   ignore: true
 help:
   ignore: true
+
+# Exclues le 2026-10-04 - non utilisées par Patrick
+palette:
+  ignore: true
+worktree:
+  ignore: true
