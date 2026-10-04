@@ -1,6 +1,15 @@
 agents:
 - cmd: /agents
   desc: ''
+approvals:
+- cmd: /approvals
+  desc: 'Show the current approval mode:'
+- cmd: /approvals manual
+  desc: 'Always ask for approval before running a flagged command:'
+- cmd: /approvals smart
+  desc: 'Let an auxiliary LLM auto-approve safe commands and deny dangerous ones:'
+- cmd: /approvals off
+  desc: 'Run flagged commands without prompting (hardline blocklist still applies):'
 bg:
 - cmd: /bg "Install dependencies and run tests"
   desc: 'Run a task in a separate background session:'
@@ -54,6 +63,13 @@ focus:
   desc: 'Toggle focus view (show only your prompt and the final response):'
 - cmd: /focus status
   desc: 'Show the current focus state:'
+footer:
+- cmd: /footer on
+  desc: 'Show the runtime-metadata footer on final replies:'
+- cmd: /footer off
+  desc: 'Hide the footer:'
+- cmd: /footer status
+  desc: 'Show the current footer state:'
 goal:
 - cmd: /goal refactor the login module
   desc: 'Set a new goal:'
@@ -63,6 +79,12 @@ goal:
   desc: 'Check whether the current goal is complete:'
 - cmd: /goal pause
   desc: 'Pause the goal loop without clearing it:'
+handoff:
+- cmd: /handoff {{platform}}
+  desc: 'Hand the session off to a messaging platform (telegram, discord, slack, whatsapp, signal, matrix):'
+history:
+- cmd: /history
+  desc: ''
 image:
 - cmd: /image ~/Pictures/screenshot.png
   desc: 'Attach a local image for the next prompt:'
@@ -154,6 +176,15 @@ quit:
   desc: 'Exit the current session:'
 - cmd: /quit --delete
   desc: 'Exit and delete the session history:'
+reasoning:
+- cmd: /reasoning
+  desc: 'Show the current reasoning effort and display state:'
+- cmd: /reasoning high
+  desc: 'Set the reasoning effort for this session:'
+- cmd: /reasoning hide
+  desc: 'Hide the reasoning trace:'
+- cmd: /reasoning high --global
+  desc: 'Persist the effort level to config:'
 redraw:
 - cmd: /redraw
   desc: ''
@@ -210,6 +241,9 @@ steer:
   desc: 'Steer agent mid-task:'
 stop:
 - cmd: /stop
+  desc: ''
+subscription:
+- cmd: /subscription
   desc: ''
 suggestions:
 - cmd: /suggestions
