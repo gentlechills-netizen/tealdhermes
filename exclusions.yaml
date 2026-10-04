@@ -16,8 +16,6 @@ blueprint:
   ignore: true
 debug:
   ignore: true
-handoff:
-  ignore: true
 reload-mcp:
   ignore: true
 browser:
@@ -30,8 +28,6 @@ import:
   ignore: true
 
 bundles:
-  ignore: true
-history:
   ignore: true
 indicator:
   ignore: true
@@ -51,13 +47,9 @@ yolo:
   ignore: true
 whoami:
   ignore: true
-footer:
-  ignore: true
 battery:
   ignore: true
 egress:
-  ignore: true
-subscription:
   ignore: true
 topup:
   ignore: true
@@ -67,13 +59,9 @@ wake:
   ignore: true
 
 # Exclues le 2026-08-16 - commandes non utilisées par Patrick
-approvals:
-  ignore: true
 fast:
   ignore: true
 personality:
-  ignore: true
-reasoning:
   ignore: true
 cron:
   ignore: true
