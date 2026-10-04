@@ -94,6 +94,9 @@ learn:
   desc: 'Learn from a project directory:'
 - cmd: /learn "the debugging workflow we just used"
   desc: 'Learn from the current conversation workflow:'
+login:
+- cmd: /login
+  desc: ''
 loop:
 - cmd: /loop 5m {{check email}}
   desc: 'Loop a prompt every 5 minutes:'
